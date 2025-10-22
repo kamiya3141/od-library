@@ -1,0 +1,33 @@
+{
+	"name": "od-library",
+	"version": "0.1.0",
+	"description": "od-library — make SVG-like objects easy in HTML (Web Components)",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"test": "vitest",
+		"build": "tsup src/index.ts --format esm,cjs,iife --dts --out-dir dist --clean",
+		"dev": "tsup src/index.ts --watch",
+		"lint": "eslint src --ext .ts",
+		"prepare": "npm run build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kamiya3141/od-library.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kamiya3141/od-library/issues"
+	},
+	"homepage": "https://github.com/kamiya3141/od-library#readme",
+	"keywords": ["web-components", "typescript", "svg", "custom-elements", "od-object"],
+	"devDependencies": {
+		"@types/node": "^24.9.1",
+		"eslint": "^9.38.0",
+		"prettier": "^3.6.2",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4"
+	}
+}
