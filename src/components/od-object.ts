@@ -1,6 +1,7 @@
 import { stringify } from "querystring";
 
 export class ODObject extends HTMLElement {
+	public static templateAddMarker = "/*add other styles*/";
 	public static template: HTMLTemplateElement = document.createElement('template');
 	static {
 		ODObject.template.innerHTML = `
@@ -32,6 +33,8 @@ export class ODObject extends HTMLElement {
 			position: absolute;
 			display: block;
 			border-width: var(--tso-otln-wei);
+			
+			${ODObject.templateAddMarker}
 		}
 
 		slot[name="text"] {
@@ -39,9 +42,7 @@ export class ODObject extends HTMLElement {
 			z-index: 10;
 		}
 	</style>
-	<slot id="slot-id">
-		<slot name="text"></slot>
-	</slot>
+	<slot name="text"></slot>
 
 </template>
 		`;
@@ -189,6 +190,14 @@ export class ODObject extends HTMLElement {
 	}
 
 	// my-methods
+	addOtherStyles(myTemplate: string = "", ...args: string[]): string {
+		args.reverse().forEach((c: string) => {
+			if (myTemplate.includes(ODObject.templateAddMarker))
+				myTemplate = myTemplate.replace(ODObject.templateAddMarker, `${ODObject.templateAddMarker}
+			${c}`);
+		});
+		return myTemplate;
+	}
 	arrangedValue(value: string | null | undefined, setPropertyElement = this, setPropertyName: string = ""): string {
 		if (value == undefined || value == null || value.length == 0) {
 			console.error(`this.arrangedValueでエラー：value error -> ${value}`);
