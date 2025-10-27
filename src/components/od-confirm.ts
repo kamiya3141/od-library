@@ -3,8 +3,7 @@ import { ODRect } from "./od-rect";
 export class ODConfirm extends ODRect {
 	public static template: HTMLTemplateElement = document.createElement('template');
 	static {
-		const replaced_template = ODRect.addOtherStyles(ODRect.template.outerHTML, "box-shadow: 0 0 0.5em 0.25em rgba(128, 128, 128, 0.25);")
-		ODConfirm.template.innerHTML = replaced_template;
+		ODConfirm.template.innerHTML = ODRect.template.outerHTML;
 	};
 	colorType: string = "normal";
 
