@@ -120,28 +120,28 @@ export class ODObject extends HTMLElement {
 	// setter, getter
 	set fill(value: string | null | undefined) {
 		if (value == null || value == "none") value = "rgba(0, 0, 0, 0)";
-		this.setAttribute("fill", this.arrangedValue(value, this, "background-color"));
+		this.setAttribute("fill", ODObject.arrangedValue(value, this, "background-color"));
 	}
 	get fill(): string | null | undefined {
 		return getComputedStyle(this).backgroundColor;
 	}
 	set stroke(value: string | null | undefined) {
 		if (value == null || value == "none") value = "rgba(0, 0, 0, 0)";
-		this.setAttribute("stroke", this.arrangedValue(value, this, "outline-color"));
+		this.setAttribute("stroke", ODObject.arrangedValue(value, this, "outline-color"));
 	}
 	get stroke(): string | null | undefined {
 		return getComputedStyle(this).outlineColor;
 	}
 	set strokeWeight(value: string | null | undefined) {
 		if (value == null || value == "none") value = "0px";
-		this.setAttribute("stroke-weight", this.arrangedValue(value, this, "outline-width"));
+		this.setAttribute("stroke-weight", ODObject.arrangedValue(value, this, "outline-width"));
 	}
 	get strokeWeight(): string | null | undefined {
 		return getComputedStyle(this).outlineWidth;
 	}
 	set strokeStyle(value: string | null | undefined) {
 		if (value == null || value == "none") value = "var(--tso-otln-tp)";
-		this.setAttribute("stroke-style", this.arrangedValue(value, this, "outline-style"));
+		this.setAttribute("stroke-style", ODObject.arrangedValue(value, this, "outline-style"));
 	}
 	get strokeStyle(): string | null | undefined {
 		return getComputedStyle(this).outlineStyle;
@@ -149,33 +149,25 @@ export class ODObject extends HTMLElement {
 
 	// 座標
 	set x(value: string) {
-		const _val: string = this.arrangedValue(value);
-		this.style.left = _val;
-		this.setAttribute("x", _val);
+		this.setAttribute("x", ODObject.arrangedValue(value, this, "left"));
 	}
 	get x(): string | null | undefined {
 		return getComputedStyle(this).left;
 	}
 	set y(value: string) {
-		const _val: string = this.arrangedValue(value);
-		this.style.top = _val;
-		this.setAttribute("y", _val);
+		this.setAttribute("y", ODObject.arrangedValue(value, this, "top"));
 	}
 	get y(): string | null | undefined {
 		return getComputedStyle(this).top;
 	}
 	set width(value: string) {
-		const _val: string = this.arrangedValue(value);
-		this.style.width = _val;
-		this.setAttribute("width", _val);
+		this.setAttribute("width", ODObject.arrangedValue(value, this, "width"));
 	}
 	get width(): string | null | undefined {
 		return getComputedStyle(this).width;
 	}
 	set height(value: string) {
-		const _val: string = this.arrangedValue(value);
-		this.style.height = _val;
-		this.setAttribute("height", _val);
+		this.setAttribute("height", ODObject.arrangedValue(value, this, "height"));
 	}
 	get height(): string | null | undefined {
 		return getComputedStyle(this).height;
@@ -190,7 +182,7 @@ export class ODObject extends HTMLElement {
 	}
 
 	// my-methods
-	addOtherStyles(myTemplate: string = "", ...args: string[]): string {
+	static addOtherStyles(myTemplate: string = "", ...args: string[]): string {
 		args.reverse().forEach((c: string) => {
 			if (myTemplate.includes(ODObject.templateAddMarker))
 				myTemplate = myTemplate.replace(ODObject.templateAddMarker, `${ODObject.templateAddMarker}
@@ -198,20 +190,20 @@ export class ODObject extends HTMLElement {
 		});
 		return myTemplate;
 	}
-	arrangedValue(value: string | null | undefined, setPropertyElement = this, setPropertyName: string = ""): string {
+	static arrangedValue(value: string | null | undefined, setPropertyElement: HTMLElement, setPropertyName: string = ""): string {
 		if (value == undefined || value == null || value.length == 0) {
-			console.error(`this.arrangedValueでエラー：value error -> ${value}`);
+			console.error(`ODObject.arrangedValueでエラー：value error -> ${value}`);
 			return "";
 		}
 		const include_important = value.includes(" !important");
 		value = value.replace(" !important", "");
 		value = `${value}${!isNaN(Number(value)) ? "px" : ""}`;
-		if (setPropertyName != "")
-			setPropertyElement.style.setProperty(setPropertyName, value, include_important ? "important" : "");
+		if (setPropertyName)
+			setPropertyElement!.style.setProperty(setPropertyName, value, include_important ? "important" : "");
 		return value;
 	}
-	arrangedValues(...values: [string | null | undefined]): (string | null)[] {
-		return values.map(c => this.arrangedValue(c));
+	static arrangedValues(setPropertyElement: HTMLElement, ...values: [string | null | undefined]): (string | null)[] {
+		return values.map(c => ODObject.arrangedValue(c, setPropertyElement));
 	}
 	setRotate(value: string | number): void {
 		value = Number(value) % 360;
