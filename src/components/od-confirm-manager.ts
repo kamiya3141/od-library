@@ -30,6 +30,11 @@ export class ODConfirmManager extends ODRect {
 
 	static reloadMyStatus(): void {
 		if (ODConfirmManager.#myStatus["expanded"]) {
+			ODConfirmManager.instance!.positionType = "lt";
+			ODConfirmManager.instance!.x = "5vw";
+			ODConfirmManager.instance!.y = "5vh";
+			ODConfirmManager.instance!.width = "90vw";
+			ODConfirmManager.instance!.height = "90vh";
 			ODConfirmManager.instance!.radius = "9999em";
 		}
 	}
