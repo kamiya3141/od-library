@@ -6,7 +6,7 @@ export class ODConfirmManager extends ODRect {
 		ODConfirmManager.template.innerHTML = ODRect.template.outerHTML;
 	};
 	
-	#myStatus = {
+	#myStatus: {expanded: boolean, sort: boolean} = {
 		"expanded": false,
 		"sort": false
 	};
@@ -14,7 +14,9 @@ export class ODConfirmManager extends ODRect {
 	constructor(x: string = "0", y: string = "0", width: string = "0", height: string = "0", confirm_text: string = "") {
 		super(x, y, width, height);
 		this.shadowRoot!.innerHTML = ODConfirmManager.template.outerHTML;
-		this.radius = "10000em";
+		this.radius = "9999em";
+		this.#myStatus["expanded"] = false;
+		
 	}
 
 	// static getter, setter

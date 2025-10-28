@@ -33,9 +33,12 @@ export class ODObject extends HTMLElement {
 			position: absolute;
 			display: block;
 			border-width: var(--tso-otln-wei);
-			box-shadow: 0 0 0.5em 0.25em rgba(128, 128, 128, 0.25);
-			
+
 			${ODObject.templateAddMarker}
+		}
+		
+		:host(.shadow) {
+			box-shadow: 0 0 0.5em 0.25em rgba(128, 128, 128, 0.25);
 		}
 
 		slot[name="text"] {
