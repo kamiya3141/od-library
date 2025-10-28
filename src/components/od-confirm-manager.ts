@@ -5,23 +5,33 @@ export class ODConfirmManager extends ODRect {
 	static {
 		ODConfirmManager.template.innerHTML = ODRect.template.outerHTML;
 	};
-	
-	#myStatus: {expanded: boolean, sort: boolean} = {
+	public static instance: null | ODConfirmManager = null;
+
+	static #myStatus: { expanded: boolean, sort: boolean } = {
 		"expanded": false,
 		"sort": false
 	};
 
-	constructor(x: string = "0", y: string = "0", width: string = "0", height: string = "0", confirm_text: string = "") {
+	constructor(x: string = "0", y: string = "0", width: string = "0", height: string = "0") {
+		if (ODConfirmManager.instance) {
+			new Error("ConfirmManager instance already exists !!");
+			return;
+		}
 		super(x, y, width, height);
-		this.shadowRoot!.innerHTML = ODConfirmManager.template.outerHTML;
-		this.radius = "9999em";
-		this.#myStatus["expanded"] = false;
-		
+		ODConfirmManager.instance = this;
+		ODConfirmManager.instance.shadowRoot!.innerHTML = ODConfirmManager.template.outerHTML;
+		ODConfirmManager.#myStatus["expanded"] = false;
 	}
 
 	// static getter, setter
 	static get elementName(): string {
 		return "od-confirm-manager";
+	}
+
+	static reloadMyStatus(): void {
+		if (ODConfirmManager.#myStatus["expanded"]) {
+			ODConfirmManager.instance!.radius = "9999em";
+		}
 	}
 
 }
