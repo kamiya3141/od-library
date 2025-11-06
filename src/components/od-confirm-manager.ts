@@ -29,16 +29,18 @@ export class ODConfirmManager extends ODRect {
 	}
 
 	static reloadMyStatus(): void {
+		ODConfirmManager.instance!.positionType = "cxcy";
+		ODConfirmManager.instance!.x = "2.5vw";
+		ODConfirmManager.instance!.y = "2.5vh";
+		ODConfirmManager.instance!.radius = "9999em";
 		if (ODConfirmManager.#myStatus["expanded"]) {
-			ODConfirmManager.instance!.positionType = "lt";
-			ODConfirmManager.instance!.x = "5vw";
-			ODConfirmManager.instance!.y = "5vh";
-			ODConfirmManager.instance!.width = "90vw";
-			ODConfirmManager.instance!.height = "90vh";
-			ODConfirmManager.instance!.radius = "9999em";
+			ODConfirmManager.instance!.width = "95vw";
+			ODConfirmManager.instance!.height = "95vh";
+		} else {
+			ODConfirmManager.instance!.width = "5vw";
+			ODConfirmManager.instance!.height = "2.5vh";
 		}
 	}
-
 }
 
 if (!customElements.get(ODConfirmManager.elementName))

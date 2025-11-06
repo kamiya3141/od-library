@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 export class ODObject extends HTMLElement {
 	public static templateAddMarker = "/*add other styles*/";
 	public static template: HTMLTemplateElement = document.createElement('template');
@@ -39,7 +37,7 @@ export class ODObject extends HTMLElement {
 		}
 
 		slot[name="text"] {
-			position: absolute;
+			position: inherit;
 			z-index: 10;
 		}
 	</style>
@@ -116,6 +114,23 @@ export class ODObject extends HTMLElement {
 	// static getter, setter
 	static get elementName(): string {
 		return "od-object";
+	}
+	/**
+	 * @returns {boolean} true -> light, false -> dark
+	 */
+	static get systemTheme(): boolean {
+		return !window.matchMedia("(prefers-color-scheme: dark)").matches;
+	}
+
+	get mySlot(): HTMLSlotElement | null {
+		return this.shadowRoot!.querySelector(`slot[name="text"]`);
+	}
+
+	set innerHTML(value: string) {
+		this.mySlot!.innerHTML = value;
+	}
+	get innerHTML(): string {
+		return this.mySlot!.innerHTML;
 	}
 
 	// setter, getter
